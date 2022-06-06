@@ -2,7 +2,7 @@
 
 Welcome to Othello-AI, a project which includes basic functions to play Othello, a GUI to help the user-experience and, above all, the implementation of Machine Learning for an AI-Bot. Ready to beat it?
 
-The game is simple to understand, however if you don't know the rules here's a brief overview. 
+The game is simple to understand, however if you don't know the rules here's a brief overview.
 https://www.worldothello.org/about/about-othello/othello-rules/official-rules/english
 
 
