@@ -4,7 +4,7 @@ Welcome to Othello-AI, a project which includes basic functions to play Othello,
 
 The game is simple to understand, however [here's a brief overview of the rules](https://www.worldothello.org/about/about-othello/othello-rules/official-rules/english).
 
-![alt tag]()
+![alt tag](https://github.com/ThomasMind/Othello-AI/match_example.gif)
 
 
 
