@@ -37,8 +37,7 @@ The functions is composed by two elements:
 1. Monte Carlo tree search
 2. Machine Learning Regressor
 
-When it's our turn, the algorithm computes all the possible moves
-
+When it's our turn, the algorithm computes all the possible board in a 2 level depth of the Montecarlo tree.
 
 
 
