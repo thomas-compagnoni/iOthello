@@ -5,7 +5,7 @@ Welcome to Othello-AI, a project which includes basic functions to play Othello,
 The game is simple to understand, however [here's a brief summary of the rules](https://www.worldothello.org/about/about-othello/othello-rules/official-rules/english).
 
 ## An overview
-<p>That's it, seems to work mh? Tests show that the AI wins 97% of the time, draws 2% and loses 1% vs a random bot .<br>
+<p>That's it, seems to work, isn't it? Tests show that the AI wins 97% of the time, draws 2% and loses 1% vs a random bot .<br>
 In this example the white player is the random bot, the black one is the trained bot.
 
 <p>&nbsp;</p>
@@ -14,9 +14,6 @@ In this example the white player is the random bot, the black one is the trained
   <img src="https://github.com/ThomasMind/Othello-AI/blob/cfbfca2f6ce9cc5c99139076cf01f92c3a594b67/figs/match_example.gif" alt="alt text" width="300" height="300">
   
 <p>&nbsp;</p>
-
-
-
 
 
 How does the algorithm works?
