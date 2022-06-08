@@ -11,7 +11,7 @@ In this example the white player is the random bot, the black one is the trained
 <p>&nbsp;</p>
 
 <p align="center">
-  <img src="https://github.com/ThomasMind/Othello-AI/blob/main/match_example.gif" alt="alt text" width="300" height="300">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/cfbfca2f6ce9cc5c99139076cf01f92c3a594b67/figs/match_example.png" alt="alt text" width="300" height="300">
   
 <p>&nbsp;</p>
 
@@ -45,7 +45,7 @@ ___A visual example___
 
 <p>&nbsp;</p>
 <p align="center">
-  <img src="https://github.com/ThomasMind/Othello-AI/blob/main/match_example.gif" alt="alt text" width="300" height="300">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/cfbfca2f6ce9cc5c99139076cf01f92c3a594b67/figs/Move0.png" alt="alt text" width="300" height="300">
 <p>&nbsp;</p>
 
 - We need to choose between 5 possible moves. If we compute every mov we will have a the first level of the Montecarlo. We need to go deeper.
