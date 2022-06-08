@@ -69,7 +69,7 @@ When it's our turn, the algorithm computes all the possible board in a 2 level d
 
 <p>&nbsp;</p>
 <p align="center">
-  <img src="https://github.com/ThomasMind/Othello-AI/blob/cfbfca2f6ce9cc5c99139076cf01f92c3a594b67/figs/Move2_matrix.png" alt="alt text" width="150" height="150">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/fe2d03bb73a6b7349f7bef110d442ee3580bf5b6/figs/Move2_matrix.png" alt="alt text" width="150" height="150">
 <p>&nbsp;</p>
 
 - **The score is simply a weighted score of the board**
