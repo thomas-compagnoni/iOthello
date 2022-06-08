@@ -50,7 +50,7 @@ When it's our turn, the algorithm computes all the possible board in a 2 level d
 
 <p>&nbsp;</p>
 <p align="center">
-  <img src="https://github.com/ThomasMind/Othello-AI/blob/cfbfca2f6ce9cc5c99139076cf01f92c3a594b67/figs/Move1.png" alt="alt text" width="200" height="200">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/f188944bef620964757b11b26dd859011421055c/figs/move1.png" alt="alt text" width="200" height="200">
 <p>&nbsp;</p>
 
 - The opponent has 5 more moves. Eventually we will have a total of 21 possible boards in the second level of the tree. For example, this is the board if the opponent plays move 3.
@@ -81,16 +81,31 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 ### Weights
 
 - Let's explore the weights. Here is the graph of how they evolve through the time, every line represent a cell. The legend shows the coordinate of the matrix.
-- We can immediately
-
+- We can immediately spot three important facts:
+  1. Some weights move similarly
+  2. Their value change through the game, some even move from being negative to being positive.
+  3. Some have values near zero.
 <p align="center">
 <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights.png" alt="alt text" width="600" height="350"> 
+
+<p>&nbsp;</p>
+
+- Now we want to build clusters which come out naturally, they are 6. We make the average in-cluster and call them with capital letters.
+<p>&nbsp;</p>
+<p align="center">
+<img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights_clusters.png" alt="alt text" width="480" height="350"> <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="450" height="350">
   
+- The results are strabiliants, they are intuitive and they respect the classical theory of the game.
+- The corners are the most powerful cells, they can't be taken.
+- The cell near them have negative weights at the start because they allow the opponent to take the corners.
+- The edges have some tactical power, they are difficult to be taken too.
+- Note that the weights converge to 1, the score of the last move is simply the sum of the board, this will be more clear when we'll talk about how the models were trained
+  
+### Final evaluation of the move
+  
+- Now we need to apply the score function on every board computed in the Montecarlo tree.
+  
+- For the example before: score = -1.56397049
 
 <p align="center">
-<img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights_clusters.png" alt="alt text" width="500" height="350"> <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="450" height="350">
-  
- - For the example before the mathematics is this:
-
-
-$$ score = -1.56397049 $$
+<img src="https://github.com/ThomasMind/Othello-AI/blob/dc8a284149ed74e247afb3aa8944987cacf686ba/figs/scores.png" alt="alt text" width="550" height="350"> 
