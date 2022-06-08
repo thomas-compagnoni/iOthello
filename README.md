@@ -5,8 +5,8 @@ Welcome to Othello-AI, a project which includes basic functions to play Othello,
 The game is simple to understand, however [here's a brief summary of the rules](https://www.worldothello.org/about/about-othello/othello-rules/official-rules/english).
 
 ## An overview
-<p>That's it, seems to work mh? Tests show that the AI-Bot vs a random bot wins 97% of the time, draws 2% and loses 1%.<br>
-In this example the white player is a random bot, the black one is the trained bot.
+<p>That's it, seems to work mh? Tests show that the AI wins 97% of the time, draws 2% and loses 1% vs a random bot .<br>
+In this example the white player is the random bot, the black one is the trained bot.
 
 <p>&nbsp;</p>
 
@@ -39,6 +39,29 @@ The functions is composed by two elements:
 
 When it's our turn, the algorithm computes all the possible board in a 2 level depth of the Montecarlo tree.
 
+___A visual example___
 
+- Suppose the AI is the white player, and we are at the third move in the game. The situation will be like this:
 
+<p>&nbsp;</p>
+<p align="center">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/main/match_example.gif" alt="alt text" width="300" height="300">
+<p>&nbsp;</p>
+
+- We need to choose between 5 possible moves. If we compute every mov we will have a the first level of the Montecarlo. We need to go deeper.
+- How will be the board if we play move 1?
+
+<p>&nbsp;</p>
+<p align="center">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/main/match_example.gif" alt="alt text" width="300" height="300">
+<p>&nbsp;</p>
+
+- The opponent has 5 more moves. Eventually we will have a total of 21 possible boards in the second level of the tree. For example, this is the board if the opponent plays move 3.
+
+<p>&nbsp;</p>
+<p align="center">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/main/match_example.gif" alt="alt text" width="300" height="300">
+<p>&nbsp;</p>
+
+- 
 
