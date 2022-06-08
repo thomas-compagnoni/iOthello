@@ -62,15 +62,35 @@ When it's our turn, the algorithm computes all the possible board in a 2 level d
 
 #### Now how do we give a score to the board?
 
-- Behind the user-interface, the board is a numpy matrix 6x6 with: 
-  - 0 where empty
-  - 1 for player one
-  - -1 for player two
+- Behind the user-interface, the board is a numpy matrix 6x6 with: **0** where empty | **1** for player one | **-1** for player two
 
 <p>&nbsp;</p>
 <p align="center">
   <img src="https://github.com/ThomasMind/Othello-AI/blob/fe2d03bb73a6b7349f7bef110d442ee3580bf5b6/figs/Move2_matrix.png" alt="alt text" width="150" height="150">
 <p>&nbsp;</p>
 
-- **The score is simply a weighted score of the board**
+> **The score is simply a weighted score of the board**
 
+$$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
+
+- The parameters: **w** is the weight, **c** is the value of a singular cell. 
+- The subscripts: *m* is the move number (weights are dinamic through the match), *i* is the line, *j* the column.
+
+- The weights are determined by a Ridge Regression with alpha=1, we'll see later how to train it.
+
+### Weights
+
+- Let's explore the weights. Here is the graph of how they evolve through the time, every line represent a cell. The legend shows the coordinate of the matrix.
+- We can immediately
+
+<p align="center">
+<img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights.png" alt="alt text" width="600" height="350"> 
+  
+
+<p align="center">
+<img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights_clusters.png" alt="alt text" width="500" height="350"> <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="450" height="350">
+  
+ - For the example before the mathematics is this:
+
+
+$$ score = -1.56397049 $$
