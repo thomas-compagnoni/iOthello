@@ -123,4 +123,21 @@ I didn't know it before, but it is a **Minimax** function. This is a concept wel
  
  
 ## 2. Training the models
+
+- In order to train a model we need data.
+- In research.py I implemented the function "random_simulations" which simulates n random matches between two random bots.
+- For every move I save the board as a flattened array of dimension 1x36 which will represent our X<br>The final score of the match, which is a number, is our y
+- The function returns X, y:
+  - X is an 3D matrix of dimension (32, n, 36)
+  - y is a vector with n elements
+  
+> An example:
+
+  
+> X[10] =
+>  [[ 1,  0, -1,  0,  0,  0,  1,  1, -1,  0,  0,  0,  0,  1,  1, -1, 0,  0, -1, -1, -1,  1, -1,  0,  0,  0,  0,  0,  1, -1,  0,  0, 0,  0,  0,  0],
+>  [ 0,  0,  0,  1, -1,  0,  0, -1,  0, -1,  1,  0,  1,  1,  1,  1, 1,  0,  0, -1,  1, -1,  0,  0,  0,  0,  0, -1,  0,  0,  0,  0, 0, -1,  0,  0],
+>  [ 0,  0,  0,  0,  0,  0,  0,  1,  0,  1, -1,  0,  0,  0,  1,  1, 0,  0,  0,  0,  1,  1, -1, -1,  0,  1, -1,  0, -1,  0,  0,  1, -1,  0, -1,  0],
+>  [ 0,  1,  0,  0,  0,  0,  0, -1,  1, -1,  1,  1,  0,  0,  1,  1, 1,  0,  0,  0,  1,  1,  1, -1,  0,  0,  1,  0,  0,  0,  0,  0, 1,  0,  0,  0]]
+  
   
