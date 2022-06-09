@@ -115,7 +115,7 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 
 I didn't know it before, but it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
   
-> **Some facts**:
+> #### Some facts:
 >  - When there is a move which makes the opponent skips his turn, the AI will likely choose it.
 >  - The othello 6x6 has been already "solved", the perfect match exists. Our algorithm respects the first 5 move, then it deviates.
 >  - We can run the score function with weights = 1 for every move and every cell (it's the sum of the board), in this case 
@@ -125,19 +125,45 @@ I didn't know it before, but it is a **Minimax** function. This is a concept wel
 ## 2. Training the models
 
 - In order to train a model we need data.
-- In research.py I implemented the function "random_simulations" which simulates n random matches between two random bots.
+- In research.py I implemented the function "random_simulations" which simulates **n** random matches between two random bots.
 - For every move I save the board as a flattened array of dimension 1x36 which will represent our X<br>The final score of the match, which is a number, is our y
 - The function returns X, y:
-  - X is an 3D matrix of dimension (32, n, 36)
+  - X is an 3D matrix of dimension (32, **n**, 36)
   - y is a vector with n elements
   
-> An example:
-
+___An example___:
   
-> X[10] =
->  [[ 1,  0, -1,  0,  0,  0,  1,  1, -1,  0,  0,  0,  0,  1,  1, -1, 0,  0, -1, -1, -1,  1, -1,  0,  0,  0,  0,  0,  1, -1,  0,  0, 0,  0,  0,  0],
->  [ 0,  0,  0,  1, -1,  0,  0, -1,  0, -1,  1,  0,  1,  1,  1,  1, 1,  0,  0, -1,  1, -1,  0,  0,  0,  0,  0, -1,  0,  0,  0,  0, 0, -1,  0,  0],
->  [ 0,  0,  0,  0,  0,  0,  0,  1,  0,  1, -1,  0,  0,  0,  1,  1, 0,  0,  0,  0,  1,  1, -1, -1,  0,  1, -1,  0, -1,  0,  0,  1, -1,  0, -1,  0],
->  [ 0,  1,  0,  0,  0,  0,  0, -1,  1, -1,  1,  1,  0,  0,  1,  1, 1,  0,  0,  0,  1,  1,  1, -1,  0,  0,  1,  0,  0,  0,  0,  0, 1,  0,  0,  0]]
+- Suppose we have done 4 simulations and we want to see what are the possible states of the board. <br> With the command X[10, : , : ] the result will be:
+
+$$
+  \small X = 
+  \left[\begin{array}{c}
+  1&0&-1&0&0&0&1&1&-1&0&0&0&0&1&1&-1&0&0&-1&-1&-1&1&-1&0&0&0&0&0&1&-1&0&0&0&0&0&0\\
+  0&0&0&1&-1&0&0&-1&0&-1&1&0&1&1&1&1&1&0&0&-1&1&-1&0&0&0&0&0&-1&0&0&0&0&0&-1&0&0\\
+  0&0&0&0&0&0&0&1&0&1&-1&0&0&0&1&1&0&0&0&0&1&1&-1&-1&0&1&-1&0&-1&0&0&1&-1&0&-1&0\\
+  0&1&0&0&0&0&0&-1&1&-1&1&1&0&0&1&1&1&0&0&0&1&1&1&-1&0&0&1&0&0&0&0&0&1&0&0&0
+  \end{array}\right]
+$$
+  
+- Each row represents a single simulation, while each columns represents a different cell of the board.
+  
+- Let's see the y:
+
+$$
+  y = 
+  \left[\begin{array}{c}
+  18\\
+  18\\
+  -16\\
+  10
+  \end{array}\right]
+$$
+  
+- The input for our machine learning model are ready. Each columns is a features, each row is a sample.
+- For each move we are building a different model, that is for every row in the 1st axis of X.
+
+### Model selection
+  
+- The model 
   
   
