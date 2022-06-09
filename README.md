@@ -114,19 +114,13 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 > We can apply the rule also to player two by inverting the steps, before we find the maxima than we choose the move with the minimum value.
 
 I didn't know it before, but it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
+  
+> **Some facts**:
+>  - When there is a move which makes the opponent skips his turn, the AI will likely choose it.
+>  - The othello 6x6 has been already "solved", the perfect match exists. Our algorithm respects the first 5 move, then it deviates.
+>  - We can run the score function with weights = 1 for every move and every cell (it's the sum of the board), in this case 
+>    the probabilities of winning fall to 75%.
  
-<div class="force-word-wrap">
-  
-```
-Some facts:
-  - When there is a move which makes the opponent skips his turn, the AI will likely choose it.
-  - The othello 6x6 has been already "solved", the perfect match exists. Our algorithm respects the first 5 move, then it deviates.
-  - We can run the score function with weights = 1 for every move and every cell (it's the sum of the board), in this case 
-   the probabilities of winning fall to 75%.
-```
-  
-</div>
-  
  
 ## 2. Training the models
   
