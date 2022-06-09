@@ -53,7 +53,7 @@ When it's our turn, the algorithm computes all the possible board in a 2 level d
   <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move1.png" alt="alt text" width="200" height="200">
 <p>&nbsp;</p>
 
-- The opponent has 5 more moves. Eventually we will have a total of 21 possible boards in the second level of the tree. For example, this is the board if the opponent plays move 1.
+- The opponent has 4 more moves. Eventually we will have a total of 21 possible boards in the second level of the tree. For example, this is the board if the opponent plays move 1.
 
 <p>&nbsp;</p>
 <p align="center">
@@ -110,10 +110,10 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 <img src="https://github.com/ThomasMind/Othello-AI/blob/12f70cab51547ccf68f00a579ac4c4199fd5b9d1/figs/scores.png" alt="alt text" width="550" height="350"> 
   
 - We now need only two final steps to find the best move, for every subset we find the minimum score, which is shown at the bottom in the picture. This can be intrepreted as the worst case-scenario after the response move of the opponent. We want to minimize that risk.
-- The best move is the one with the maximum value, in the example above is the move 3.
+- The best move is the one with the maximum value, in the example above it is the move 3.
 > We can apply the rule also to player two by inverting the steps, before we find the maxima than we choose the move with the minimum value.
 
-I didn't know it before, but it is **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax)
+I didn't know it before, but it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
  
  
   
