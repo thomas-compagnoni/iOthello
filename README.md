@@ -95,7 +95,7 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 <p align="center">
 <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights_clusters.png" alt="alt text" width="480" height="350"> <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="450" height="350">
   
-- The results are strabiliants, they are intuitive and they respect the classical theory of the game.
+- The results are astonishing, they are intuitive and they respect the classical theory of the game.
 - The corners are the most powerful cells, they can't be taken.
 - The cell near them have negative weights at the start because they allow the opponent to take the corners.
 - The edges have some tactical power, they are difficult to be taken too.
@@ -104,8 +104,16 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 ### Final evaluation of the move
   
 - Now we need to apply the score function on every board computed in the Montecarlo tree.
-  
 - For the example before: score = -1.56397049
 
 <p align="center">
 <img src="https://github.com/ThomasMind/Othello-AI/blob/12f70cab51547ccf68f00a579ac4c4199fd5b9d1/figs/scores.png" alt="alt text" width="550" height="350"> 
+  
+- We now need only two final steps to find the best move, for every subset we find the minimum score, which is shown at the bottom in the picture. This can be intrepreted as the worst case-scenario after the response move of the opponent. We want to minimize that risk.
+- The best move is the one with the maximum value, in the example above is the move 3.
+> We can apply the rule also to player two by inverting the steps, before we find the maxima than we choose the move with the minimum value.
+
+I didn't know it before, but it is **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax)
+ 
+ 
+  
