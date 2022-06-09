@@ -133,7 +133,7 @@ I didn't know it before, but it is a **Minimax** function. This is a concept wel
   
 ___An example___:
   
-- Suppose we have done 4 simulations and we want to see what are the possible states of the board. <br> With the command X[10, : , : ] the result will be:
+- Suppose we have done 4 simulations and we want to see what are the possible states of the board at move 10. <br> With the command X[10, : , : ] the result will be:
 
 $$
   \small X = 
