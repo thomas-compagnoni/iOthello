@@ -93,7 +93,7 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 - Now we want to build clusters which come out naturally, they are 6. We make the average in-cluster and call them with capital letters.
 <p>&nbsp;</p>
 <p align="center">
-<img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights_clusters.png" alt="alt text" width="480" height="350"> <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="450" height="350">
+<img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights_clusters.png" alt="alt text" width="500" height="350"> <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="410" height="350">
   
 - The results are astonishing, they are intuitive and they respect the classical theory of the game.
 - The corners are the most powerful cells, they can't be taken.
