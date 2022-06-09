@@ -42,22 +42,22 @@ When it's our turn, the algorithm computes all the possible board in a 2 level d
 
 <p>&nbsp;</p>
 <p align="center">
-  <img src="https://github.com/ThomasMind/Othello-AI/blob/cfbfca2f6ce9cc5c99139076cf01f92c3a594b67/figs/Move0.png" alt="alt text" width="200" height="200">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move0.png" alt="alt text" width="200" height="200">
 <p>&nbsp;</p>
 
 - We need to choose between 5 possible moves. If we compute every move we will have a the first level of the Montecarlo. But we need to go deeper.
-- How will be the board if we play move 1?
+- How will be the board if we play move 5?
 
 <p>&nbsp;</p>
 <p align="center">
-  <img src="https://github.com/ThomasMind/Othello-AI/blob/f188944bef620964757b11b26dd859011421055c/figs/move1.png" alt="alt text" width="200" height="200">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move1.png" alt="alt text" width="200" height="200">
 <p>&nbsp;</p>
 
-- The opponent has 5 more moves. Eventually we will have a total of 21 possible boards in the second level of the tree. For example, this is the board if the opponent plays move 3.
+- The opponent has 5 more moves. Eventually we will have a total of 21 possible boards in the second level of the tree. For example, this is the board if the opponent plays move 1.
 
 <p>&nbsp;</p>
 <p align="center">
-  <img src="https://github.com/ThomasMind/Othello-AI/blob/cfbfca2f6ce9cc5c99139076cf01f92c3a594b67/figs/Move2.png" alt="alt text" width="200" height="200">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move2.png" alt="alt text" width="200" height="200">
 <p>&nbsp;</p>
 
 #### Now how do we give a score to the board?
@@ -66,7 +66,7 @@ When it's our turn, the algorithm computes all the possible board in a 2 level d
 
 <p>&nbsp;</p>
 <p align="center">
-  <img src="https://github.com/ThomasMind/Othello-AI/blob/fe2d03bb73a6b7349f7bef110d442ee3580bf5b6/figs/Move2_matrix.png" alt="alt text" width="150" height="150">
+  <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move2_matrix.png" alt="alt text" width="150" height="150">
 <p>&nbsp;</p>
 
 > **The score is simply a weighted score of the board**
@@ -108,4 +108,4 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 - For the example before: score = -1.56397049
 
 <p align="center">
-<img src="https://github.com/ThomasMind/Othello-AI/blob/dc8a284149ed74e247afb3aa8944987cacf686ba/figs/scores.png" alt="alt text" width="550" height="350"> 
+<img src="https://github.com/ThomasMind/Othello-AI/blob/12f70cab51547ccf68f00a579ac4c4199fd5b9d1/figs/scores.png" alt="alt text" width="550" height="350"> 
