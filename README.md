@@ -99,7 +99,7 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 - The corners are the most powerful cells, they can't be taken.
 - The cell near them have negative weights at the start because they allow the opponent to take the corners.
 - The edges have some tactical power, they are difficult to be taken too.
-- Note that the weights converge to 1, the score of the last move is simply the sum of the board, this will be more clear when we'll talk about how the models were trained
+- Notice that the weights converge to 1, the score of the last move is simply the sum of the board, this will be more clear when we'll talk about how the models were trained
   
 ### Final evaluation of the move
   
