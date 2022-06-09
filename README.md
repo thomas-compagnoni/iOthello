@@ -1,6 +1,6 @@
 # [Othello-AI](https://github.com/ThomasMind/Othello-AI)
 
-Welcome to Othello-AI, a project which includes basic functions to play Othello, a GUI to help the user-experience and, above all, the implementation of Machine Learning for an AI-Bot. Ready to beat it?
+Welcome to Othello-AI, a project which includes basic functions to play Othello, a GUI to help the user-experience and, above all, the implementation of Machine Learning for an AI-Bot. *Ready to beat it?*
 
 The game is simple to understand, however [here's a brief summary of the rules](https://www.worldothello.org/about/about-othello/othello-rules/official-rules/english).
 
@@ -25,7 +25,7 @@ I'll follow a top-down approach to explain what's behind, in 3 steps:
 2. Training the models
 3. Optimizing basic functions
 
-### Building the score function
+## 1. Building the score function
 
 This had been the most difficult task of the whole project, how does the bot choose the best move?
 I do not hide the fact that I made dozens of attempts, everyone with bad results, until surprisingly I found the one which worked, moreover well above expectations. 
@@ -115,5 +115,18 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 
 I didn't know it before, but it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
  
+<div class="force-word-wrap">
+  
+```
+Some facts:
+  - When there is a move which makes the opponent skips his turn, the AI will likely choose it.
+  - The othello 6x6 has been already "solved", the perfect match exists. Our algorithm respects the first 5 move, then it deviates.
+  - We can run the score function with weights = 1 for every move and every cell (it's the sum of the board), in this case 
+   the probabilities of winning fall to 75%.
+```
+  
+</div>
+  
  
+## 2. Training the models
   
