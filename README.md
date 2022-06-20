@@ -23,7 +23,7 @@ How does the algorithm works?
 Click to go directly to the paragraph:
 
 1. [Building the score function](https://github.com/ThomasMind/Othello-AI/edit/main/README.md#1-building-the-score-function)
-2. [How to find the best move between the possibles]
+2. [How to find the best move]
 3. [Training the models with machine learning](https://github.com/ThomasMind/Othello-AI#2-training-the-models)
 
 ## 1. Building the score function
@@ -31,24 +31,24 @@ Click to go directly to the paragraph:
 This had been the most difficult task of the whole project, how does the bot choose the best move? <br>
 I made dozens of attempts, everyone with bad results, until surprisingly I found the one which worked, moreover well above expectations. 
 
-The functions is composed by two elements:
-1. Monte Carlo tree search
-2. Machine Learning Regressor
+The function is composed by two elements:
+1. A Monte Carlo tree search
+2. A Regressor scoring each board
 
 ### 1.1 Monte Carlo tree search
 
-When it's our turn, the algorithm computes all the possible board in a 2 level depth of a **Montecarlo tree** without implementing the back propagation.
+When it's our turn, the algorithm computes all the possible board in a **Montecarlo tree** of depth 2.
 
 #### A visual example
 
-- Suppose the AI is the white player, and we are at the third move in the game. The situation will be like this:
+- Suppose the AI is the white player, and we are at the third move in the game. The situation can be like this:
 
 <p>&nbsp;</p>
 <p align="center">
   <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move0.png" alt="alt text" width="200" height="200">
 <p>&nbsp;</p>
 
-- We need to choose between 5 possible moves. If we compute every move we will have a the first level of the Montecarlo. But we need to go deeper.
+- We need to choose between 5 possible moves. They represent the first level of our tree. But we need to go deeper.
 - How will be the board if we play move 5?
 
 <p>&nbsp;</p>
@@ -56,75 +56,58 @@ When it's our turn, the algorithm computes all the possible board in a 2 level d
   <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move1.png" alt="alt text" width="200" height="200">
 <p>&nbsp;</p>
 
-- The opponent has 4 more moves. Eventually we will have a total of 21 possible boards in the second level of the tree. For example, this is the board if the opponent plays move 1.
+- The opponent has 4 moves. 
+- In this example, all the possible moves in response to our first move will give us a total of 21 possible boards, this is the second level of the montecarlo tree. For example, this is the board if the opponent plays move 1.
 
 <p>&nbsp;</p>
 <p align="center">
   <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move2.png" alt="alt text" width="200" height="200">
 <p>&nbsp;</p>
 
-### 1.2 Machine Learning Regressor
-#### Now how do we give a score to the board?
+### 1.2 The Regressor
+#### Now how do we give a score to each board?
 
-- Behind the user-interface, the board is a numpy matrix 6x6 with: **0** where empty | **1** for player one | **-1** for player two
+The objective is to reduce the board to a single number, which depends on the number of pieces a player has and their position on the board. As in chess a rook and a queen are usually stronger than a knight and a bishop, in othello pieces on the edges and corners are stronger.
+Reading other projects on Github, I found out that the scores are often given discretionarily, by setting manually some rules. This method can't be optimized, how can a human determine the perfect parameters?
+What I did was different, I let a machine learning model to decide whether a move was convenient or not. <br>
+
+- Machine learning needs numbers, so, behind the user-interface, the board is a numpy matrix 6x6:<br><p align="center"><br>**0** where empty | **1** for player one | **-1** for player two
 
 <p>&nbsp;</p>
 <p align="center">
   <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move2_matrix.png" alt="alt text" width="150" height="150">
 <p>&nbsp;</p>
 
-> **The score is simply a weighted score of the board**
+- The first approach was to simply sum the pieces on the board, so if player **1** has more pieces the score is positive, otherwise it will be negative. But this implies that every cell has the same importance, we need to include also the information given by the position of the cell.
+
+**Finally we can write our formula:**
+> The score is a weighted sum of the board
 
 $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 
-- The parameters: **w** is the weight, **c** is the value of a singular cell. 
-- The subscripts: *m* is the move number (weights are dinamic through the match), *i* is the line, *j* the column.
+- **The parameters**: *w* is the weight, *c* is the value of a singular cell. 
+- **The subscripts**: *m* is the move number (weights are dinamic through the match), *i* is the line, *j* the column.
 
-- The weights are determined by a Ridge Regression with alpha=1, we'll see later how to train it.
-
-### Weights
-
-- Let's explore the weights. Here is the graph of how they evolve through the time, every line represent a cell. The legend shows the coordinate of the matrix.
-- We can immediately spot three important facts:
-  1. Some weights move similarly
-  2. Their value change through the game, some even move from being negative to being positive.
-  3. Some have values near zero.
-<p align="center">
-<img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights.png" alt="alt text" width="600" height="350"> 
-
-<p>&nbsp;</p>
-
-- Now we want to build clusters which come out naturally, they are 6. We make the average in-cluster and call them with capital letters.
-- The graph on the left is the same of the graph above but with cluster grouping, while the graph on the left is representing what are the cells corresponding to each cluster.
-<p>&nbsp;</p>
-<p align="center">
-<img src="https://github.com/ThomasMind/Othello-AI/blob/fc49a4d314ca5ed621a86f5731dc464e51a62f52/figs/weights_clusters.png" alt="alt text" width="450" height="330"><img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="377" height="330">
+> In the image above: 
+> a simple sum gives -1.0, while my model gives -1.5. It is saying that the black position is stronger than white's.
   
-- The results are astonishing, they are intuitive and they respect the classical theory of the game.
-- The corners are the most powerful cells, they can't be taken.
-- The cell near them have negative weights at the start because they allow the opponent to take the corners.
-- The edges have some tactical power, they are difficult to be taken too.
-- Notice that the weights converge to 1, the score of the last move is simply the sum of the board, this will be more clear when we'll talk about how the models were trained
-  
-### How to find the best move between the possibles
-  
-- Now we need to apply the score function on every board computed in the Montecarlo tree.
-- For the example before: score = -1.5
+### 2. How to find the best move
+Now we can assign a score to a given board, but do how we confront them?
+We need to apply the score function on every board computed in the Montecarlo tree. For every board in the first level we'll have a list of scores for the ones in the second layer.<br>
+The image explains the process, I used the same example has before to make it clearer. Every circle represent a board, the color depends on the player which has the turn. From the starting position (the root node), we developed our possible moves and each subsequent move.<br>
+What is new here is the last line **MIN**. This is the minimum score for each subset which can be intrepreted as the worst case-scenario if we choose that path. *We want to minimize this risk*.
+> **The best move is the one with the highest *MIN* value.**
 
 <p align="center">
 <img src="https://github.com/ThomasMind/Othello-AI/blob/12f70cab51547ccf68f00a579ac4c4199fd5b9d1/figs/scores.png" alt="alt text" width="550" height="350"> 
-  
-- We now need only two final steps to find the best move, for every subset we find the minimum score, which is shown at the bottom in the picture. This can be intrepreted as the worst case-scenario after the response move of the opponent. We want to minimize that risk.
-- The best move is the one with the maximum value, in the example above it is the move 3.
-> We can apply the rule also to player two by inverting the steps, before we find the maxima than we choose the move with the minimum value.
+
 
 Basically it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
   
 > #### Some facts:
+>  - We can apply the rule also to player two by inverting the steps (first MAX than MIN), more the score is negative more the player ha an advantage.
 >  - When there is a move which makes the opponent skips his turn, the AI will likely choose it.
->  - The othello 6x6 has been already "solved", the perfect match exists. Our algorithm respects the first 5 move, then it deviates.
->  - We can run the score function with weights = 1 for every move and every cell (it's the sum of the board), in this case 
->    the probabilities of winning fall to 75%.
+>  - We can run the score function with weights = 1 for every move and every cell, in this case the probabilities of winning fall to 75%.
  
  
 ## 3. Training the models
@@ -167,6 +150,31 @@ $$
 - The input for our machine learning model are ready. Each columns is a features, each row is a sample.
 - For each move we are building a different model, that is for every row in the 1st axis of X.
 
+
+### Weights
+
+- Let's explore the weights. Here is the graph of how they evolve through the time, every line represent a cell. The legend shows the coordinate of the matrix.
+- We can immediately spot three important facts:
+  1. Some weights move similarly
+  2. Their value change through the game, some even move from being negative to being positive.
+  3. Some have values near zero.
+<p align="center">
+<img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights.png" alt="alt text" width="600" height="350"> 
+
+<p>&nbsp;</p>
+
+- Now we want to build clusters which come out naturally, they are 6. We make the average in-cluster and call them with capital letters.
+- The graph on the left is the same of the graph above but with cluster grouping, while the graph on the left is representing what are the cells corresponding to each cluster.
+<p>&nbsp;</p>
+<p align="center">
+<img src="https://github.com/ThomasMind/Othello-AI/blob/fc49a4d314ca5ed621a86f5731dc464e51a62f52/figs/weights_clusters.png" alt="alt text" width="450" height="330"><img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="377" height="330">
+  
+- The results are astonishing, they are intuitive and they respect the classical theory of the game.
+- The corners are the most powerful cells, they can't be taken.
+- The cell near them have negative weights at the start because they allow the opponent to take the corners.
+- The edges have some tactical power, they are difficult to be taken too.
+- Notice that the weights converge to 1, the score of the last move is simply the sum of the board, this will be more clear when we'll talk about how the models were trained
+  
 ### Model selection
   
 - The model was not selected as a normal machine learning would do, so by dividing the dataset in train and test and then selecting the model with the highest score and highest generalization out-of-sample.
