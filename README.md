@@ -91,9 +91,10 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 <p>&nbsp;</p>
 
 - Now we want to build clusters which come out naturally, they are 6. We make the average in-cluster and call them with capital letters.
+- The graph on the left is the same of the graph above but with cluster grouping, while the graph on the left is representing what are the cells corresponding to each cluster.
 <p>&nbsp;</p>
 <p align="center">
-<img src="https://github.com/ThomasMind/Othello-AI/blob/fc49a4d314ca5ed621a86f5731dc464e51a62f52/figs/weights_clusters.png" alt="alt text" width="480" height="350"><img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="400" height="350">
+<img src="https://github.com/ThomasMind/Othello-AI/blob/fc49a4d314ca5ed621a86f5731dc464e51a62f52/figs/weights_clusters.png" alt="alt text" width="450" height="330"><img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="377" height="330">
   
 - The results are astonishing, they are intuitive and they respect the classical theory of the game.
 - The corners are the most powerful cells, they can't be taken.
@@ -104,7 +105,7 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 ### Final evaluation of the move
   
 - Now we need to apply the score function on every board computed in the Montecarlo tree.
-- For the example before: score = -1.56397049
+- For the example before: score = -1.5
 
 <p align="center">
 <img src="https://github.com/ThomasMind/Othello-AI/blob/12f70cab51547ccf68f00a579ac4c4199fd5b9d1/figs/scores.png" alt="alt text" width="550" height="350"> 
@@ -113,7 +114,7 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 - The best move is the one with the maximum value, in the example above it is the move 3.
 > We can apply the rule also to player two by inverting the steps, before we find the maxima than we choose the move with the minimum value.
 
-I didn't know it before, but it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
+Basically it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
   
 > #### Some facts:
 >  - When there is a move which makes the opponent skips his turn, the AI will likely choose it.
@@ -164,6 +165,9 @@ $$
 
 ### Model selection
   
-- The model 
+- The model was not selected as a normal machine learning would do, so by dividing the dataset in train and test and then selecting the model with the highest score and highest generalization out-of-sample.
+- I decided to test it directly in some matches against a random bot and choose the model with the highest chances of winning. In research.py this was done by the function *multiprocessing_test_vs_random_bot()* which uses the advantages of parallel computing to play multiple matches at the same time and so reducing the time of execution.
+- We chose the ridge regression because it reduces the problems of multicollinearity by keeping low values of the weights. Indeed, as the board is often symmetric after a sequence of moves the cells are naturally dependent on each other.
   
   
+ 
