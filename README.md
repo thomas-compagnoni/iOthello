@@ -35,7 +35,7 @@ The functions is composed by two elements:
 1. Monte Carlo tree search
 2. Machine Learning Regressor
 
-### 1. Monte Carlo tree search
+### 1.1 Monte Carlo tree search
 
 When it's our turn, the algorithm computes all the possible board in a 2 level depth of a **Montecarlo tree** without implementing the back propagation.
 
@@ -63,6 +63,7 @@ When it's our turn, the algorithm computes all the possible board in a 2 level d
   <img src="https://github.com/ThomasMind/Othello-AI/blob/27f5747e7704b5d8d0c2ef01a72de60aced2f8a9/figs/move2.png" alt="alt text" width="200" height="200">
 <p>&nbsp;</p>
 
+### 1.2 Machine Learning Regressor
 #### Now how do we give a score to the board?
 
 - Behind the user-interface, the board is a numpy matrix 6x6 with: **0** where empty | **1** for player one | **-1** for player two
