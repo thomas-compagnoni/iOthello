@@ -22,9 +22,9 @@ How does the algorithm works?
 
 Click to go directly to the paragraph:
 
-1. [Building the score function](https://github.com/ThomasMind/Othello-AI#1-building-the-score-function)
-2. [How to find the best move](https://github.com/ThomasMind/Othello-AI#2-how-to-find-the-best-move)
-3. [Training the models with machine learning](https://github.com/ThomasMind/Othello-AI#3-training-the-models)
+1. [Building the score function](#1-building-the-score-function)
+2. [How to find the best move](#2-how-to-find-the-best-move)
+3. [Training the models with machine learning](#3-training-the-models)
 
 ## 1. Building the score function
 
