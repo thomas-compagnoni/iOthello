@@ -5,8 +5,9 @@ Welcome to Othello-AI, a project which includes basic functions to play Othello,
 The game is simple to understand, however [here's a brief summary of the rules](https://www.worldothello.org/about/about-othello/othello-rules/official-rules/english).
 
 ## An overview
-<p>That's it, seems to work, isn't it? Tests show that the AI wins 97% of the time, draws 2% and loses 1% vs a random bot .<br>
-In this example the white player is the random bot, the black one is the trained bot.
+In the example below the white player is a random bot, the black one is the trained bot.<br>
+Tests show that the AI wins 97% of the time, draws 2% and loses 1% vs a random bot.
+
 
 <p>&nbsp;</p>
 
@@ -19,22 +20,24 @@ In this example the white player is the random bot, the black one is the trained
 How does the algorithm works?
 -----
 
-I'll follow a top-down approach to explain what's behind, in 3 steps:
+Click to go directly to the paragraph:
 
-1. Building the score function
-2. Training the models
-3. Optimizing basic functions
+1. [Building the score function](https://github.com/ThomasMind/Othello-AI/edit/main/README.md#1-building-the-score-function)
+2. [How to find the best move between the possibles]
+3. [Training the models with machine learning](https://github.com/ThomasMind/Othello-AI#2-training-the-models)
 
 ## 1. Building the score function
 
-This had been the most difficult task of the whole project, how does the bot choose the best move?
-I do not hide the fact that I made dozens of attempts, everyone with bad results, until surprisingly I found the one which worked, moreover well above expectations. 
+This had been the most difficult task of the whole project, how does the bot choose the best move? <br>
+I made dozens of attempts, everyone with bad results, until surprisingly I found the one which worked, moreover well above expectations. 
 
 The functions is composed by two elements:
 1. Monte Carlo tree search
 2. Machine Learning Regressor
 
-When it's our turn, the algorithm computes all the possible board in a 2 level depth of the **Montecarlo tree**.
+### 1. Monte Carlo tree search
+
+When it's our turn, the algorithm computes all the possible board in a 2 level depth of a **Montecarlo tree** without implementing the back propagation.
 
 #### A visual example
 
@@ -102,7 +105,7 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 - The edges have some tactical power, they are difficult to be taken too.
 - Notice that the weights converge to 1, the score of the last move is simply the sum of the board, this will be more clear when we'll talk about how the models were trained
   
-### Final evaluation of the move
+### How to find the best move between the possibles
   
 - Now we need to apply the score function on every board computed in the Montecarlo tree.
 - For the example before: score = -1.5
@@ -123,7 +126,7 @@ Basically it is a **Minimax** function. This is a concept well known in game the
 >    the probabilities of winning fall to 75%.
  
  
-## 2. Training the models
+## 3. Training the models
 
 - In order to train a model we need data.
 - In research.py I implemented the function "random_simulations" which simulates **n** random matches between two random bots.
