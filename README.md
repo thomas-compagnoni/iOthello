@@ -92,7 +92,7 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 > a simple sum gives -1.0, while my model gives -1.5. It is saying that the black position is stronger than white's.
   
 ### 2. How to find the best move
-Now we can assign a score to a given board, but do how we confront them?
+Now we can assign a score to a given board, but how do we confront them?<br> 
 We need to apply the score function on every board computed in the Montecarlo tree. For every board in the first level we'll have a list of scores for the ones in the second layer.<br>
 The image explains the process, I used the same example has before to make it clearer. Every circle represent a board, the color depends on the player which has the turn. From the starting position (the root node), we developed our possible moves and each subsequent move.<br>
 What is new here is the last line **MIN**. This is the minimum score for each subset which can be intrepreted as the worst case-scenario if we choose that path. *We want to minimize this risk*.
@@ -105,7 +105,7 @@ What is new here is the last line **MIN**. This is the minimum score for each su
 Basically it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
   
 > #### Some facts:
->  - We can apply the rule also to player two by inverting the steps (first MAX than MIN), more the score is negative more the player ha an advantage.
+>  - We can apply the rule to player two by inverting the steps (first MAX than MIN), more the score is negative more the player has an advantage.
 >  - When there is a move which makes the opponent skips his turn, the AI will likely choose it.
 >  - We can run the score function with weights = 1 for every move and every cell, in this case the probabilities of winning fall to 75%.
  
