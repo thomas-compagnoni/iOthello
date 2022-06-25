@@ -5,6 +5,29 @@ Welcome to iOthello, a project which leverages the power of machine learning to 
 
 The game is simple to understand, however if you don't know the rules [here's a brief summary](https://www.worldothello.org/about/about-othello/othello-rules/official-rules/english).
 
+## Getting Started
+
+Run on the command line:
+
+```bash
+pip install iothello
+```
+
+Or if you use the Anaconda distribution:
+
+```bash
+conda install iothello
+```
+
+Now the package is ready for use. 
+From your python environment run:
+
+```python
+import iothello
+
+iothello.play()
+```
+
 ## An overview
 In the example below the white player is a random bot, the black one is the trained bot.<br>
 Tests show that the AI wins 97% of the time, draws 2% and loses 1% vs a random bot.
