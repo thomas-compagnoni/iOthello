@@ -1,6 +1,6 @@
 # [iOthello](https://github.com/ThomasMind/iOthello)
 
-Welcome to iOthello, a project which leverages the power of machine learning to create an AI-Bot for Othello. It includes a GUI to play against it.
+Welcome to iOthello, a project which leverages the power of machine learning to create an AI-Bot for Othello and it includes a GUI to play against.
 *Ready to beat it?*
 
 The game is simple to understand, however if you don't know the rules [here's a brief summary](https://www.worldothello.org/about/about-othello/othello-rules/official-rules/english).
