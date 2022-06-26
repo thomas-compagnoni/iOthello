@@ -37,7 +37,7 @@ Tests show that the AI wins 97% of the time, draws 2% and loses 1% vs a random b
 
 <p align="center">
   <img src="https://github.com/ThomasMind/Othello-AI/blob/cfbfca2f6ce9cc5c99139076cf01f92c3a594b67/figs/match_example.gif" alt="alt text" width="300" height="300">
-  
+
 <p>&nbsp;</p>
 
 
@@ -61,7 +61,7 @@ The function is composed by two elements:
 
 ### 1.1 Monte Carlo tree search
 
-When it's our turn, the algorithm computes all the possible board in a **Montecarlo tree** of depth 2.
+When it's our turn, the algorithm computes all the possible board after two moves. A **Montecarlo tree** of depth 2.
 
 #### A visual example
 
