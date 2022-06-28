@@ -91,11 +91,11 @@ When it's our turn, the algorithm computes all the possible board after two move
 ### 1.2 The Regressor
 #### Now how do we give a score to each board?
 
-The objective is to reduce the board to a single number, which depends on the number of pieces a player has and their position on the board. As in chess a rook and a queen are usually stronger than a knight and a bishop, in othello pieces on the edges and corners are stronger.
+The objective is to reduce the board to a single number which intuitively depends on the number of pieces a player has and their position on the board. As in chess a rook and a queen are usually stronger than a knight and a bishop, in othello pieces on the edges and corners are stronger.
 Reading other projects on Github, I found out that the scores are often given discretionarily, by setting manually some rules. This method can't be optimized, how can a human determine the perfect parameters?
 What I did was different, I let a machine learning model to decide whether a move was convenient or not. <br>
 
-- Machine learning needs numbers, so, behind the user-interface, the board is a numpy matrix 6x6:<br><p align="center"><br>**0** where empty | **1** for player one | **-1** for player two
+- Machine learning needs numbers, so, behind the user-interface the board is a numpy matrix 6x6:<br><p align="center"><br>**0** where empty | **1** for player one | **-1** for player two
 
 <p>&nbsp;</p>
 <p align="center">
@@ -119,7 +119,8 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 Now we can assign a score to a given board, but how do we confront them?<br> 
 We need to apply the score function on every board computed in the Montecarlo tree. For every board in the first level we'll have a list of scores for the ones in the second layer.<br>
 The image explains the process, I used the same example has before to make it clearer. Every circle represent a board, the color depends on the player which has the turn. From the starting position (the root node), we developed our possible moves and each subsequent move.<br>
-What is new here is the last line **MIN**. This is the minimum score for each subset which can be intrepreted as the worst case-scenario if we choose that path. *We want to minimize this risk*.
+What is new here is the last line **MIN**. This is the minimum score for each subset which can be intrepreted as the worst case-scenario if we choose that path. We want to minimize this risk. <br>
+That isn't the **PERFECT** move, it is the **LEAST WORST**.
 > **The best move is the one with the highest *MIN* value.**
 
 <p align="center">
@@ -130,31 +131,33 @@ Basically it is a **Minimax** function. This is a concept well known in game the
   
 > #### Some facts:
 >  - We can apply the rule to player two by inverting the steps (first MAX than MIN), more the score is negative more the player has an advantage.
->  - When there is a move which makes the opponent skips his turn, the AI will likely choose it.
+>  - When there is a move which makes the opponent skips his turn, the AI is likely to choose it.
 >  - We can run the score function with weights = 1 for every move and every cell, in this case the probabilities of winning fall to 75%.
  
  
 ## 3. Training the models
 
-- In order to train a model we need data.
-- In research.py I implemented the function "random_simulations" which simulates **n** random matches between two random bots.
-- For every move I save the board as a flattened array of dimension 1x36 which will represent our X<br>The final score of the match, which is a number, is our y
-- The function returns X, y:
-  - X is an 3D matrix of dimension (32, **n**, 36)
-  - y is a vector with n elements
-  
+In order to train the models I decided to simulate random matches between two random bots. The more the better, so I saved 4 millions matches in 10GB of csv.
+This is done by the function "random_simulations" in *research.py*.
+
+
+Technically: 
+- For every move I save the board as a flattened array of dimension 1x36 which will represent our **X**<br>
+- The final score of the match, the simple sum of the board, is the **y**
+
+
 ___An example___:
   
-- Suppose we have done 4 simulations and we want to see what are the possible states of the board at move 10. <br> With the command X[10, : , : ] the result will be:
+- Suppose we have done 4 simulations and we want to see what are the possible states of the board at move 10. <br>
 
 $$
   \small X = 
-  \left[\begin{array}{c}
-  1&0&-1&0&0&0&1&1&-1&0&0&0&0&1&1&-1&0&0&-1&-1&-1&1&-1&0&0&0&0&0&1&-1&0&0&0&0&0&0\\
-  0&0&0&1&-1&0&0&-1&0&-1&1&0&1&1&1&1&1&0&0&-1&1&-1&0&0&0&0&0&-1&0&0&0&0&0&-1&0&0\\
-  0&0&0&0&0&0&0&1&0&1&-1&0&0&0&1&1&0&0&0&0&1&1&-1&-1&0&1&-1&0&-1&0&0&1&-1&0&-1&0\\
-  0&1&0&0&0&0&0&-1&1&-1&1&1&0&0&1&1&1&0&0&0&1&1&1&-1&0&0&1&0&0&0&0&0&1&0&0&0
-  \end{array}\right]
+  \left[{\begin{array}{c}
+  1&0&-1&0&0&0&1&1&-1&0&0&0&0&1&1&-1&0&0&-1&-1&-1&1&-1& \dots &  \\
+  0&0&0&1&-1&0&0&-1&0&-1&1&0&1&1&1&1&1&0&0&-1&1&-1&0& \dots & \\
+  0&0&0&0&0&0&0&1&0&1&-1&0&0&0&1&1&0&0&0&0&1&1&-1& \dots &  \\
+  0&1&0&0&0&0&0&-1&1&-1&1&1&0&0&1&1&1&0&0&0&1&1&1& \dots & 
+  \end{array}}\right]
 $$
   
 - Each row represents a single simulation, while each columns represents a different cell of the board.
@@ -171,39 +174,37 @@ $$
   \end{array}\right]
 $$
   
-- The input for our machine learning model are ready. Each columns is a features, each row is a sample.
-- For each move we are building a different model, that is for every row in the 1st axis of X.
+- The input for our machine learning model are now ready. Each columns is a features, each row is a sample.
 
+<ins>Remember:</ins> For each move we are building a different model.
+
+### Model selection
+The model was not selected as a normal machine learning would do, by dividing the dataset in train and test and then selecting the model with the highest score and highest generalization out-of-sample. I decided to test it directly in some matches against a random bot and choose the model with the highest chances of winning. In research.py this was done by the function *multiprocessing_test_vs_random_bot()* which uses the advantages of parallel computing to play multiple matches at the same time and so reducing the time of execution.
+Finally, I chose the ridge regression because it reduces the problems of multicollinearity by keeping low values of the weights. Indeed, the board is often symmetric after a sequence of moves and the cells are naturally dependent on each other.
 
 ### Weights
+Let's explore the weights computed by the Ridge regression. Here is the graph of how they evolve through the time, every line represents a cell.
 
-- Let's explore the weights. Here is the graph of how they evolve through the time, every line represent a cell. The legend shows the coordinate of the matrix.
-- We can immediately spot three important facts:
+We can immediately spot **three important facts**:
   1. Some weights move similarly
   2. Their value change through the game, some even move from being negative to being positive.
-  3. Some have values near zero.
+  3. Some have values near zero, therefore they are not strategic.
+ 
 <p align="center">
 <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights.png" alt="alt text" width="600" height="350"> 
 
 <p>&nbsp;</p>
 
-- Now we want to build clusters which come out naturally, they are 6. We make the average in-cluster and call them with capital letters.
-- The graph on the left is the same of the graph above but with cluster grouping, while the graph on the left is representing what are the cells corresponding to each cluster.
+- The graph on the left is the same of the graph above but with cluster regrouping, while the graph on the right represents which are the cells corresponding to each cluster.
+
 <p>&nbsp;</p>
 <p align="center">
 <img src="https://github.com/ThomasMind/Othello-AI/blob/fc49a4d314ca5ed621a86f5731dc464e51a62f52/figs/weights_clusters.png" alt="alt text" width="450" height="330"><img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/board_clustered.png" alt="alt text" width="377" height="330">
   
-- The results are astonishing, they are intuitive and they respect the classical theory of the game.
-- The corners are the most powerful cells, they can't be taken.
+> The results are astonishing, they are intuitive and they respect the classical theory of the game.
+- The corners are the most powerful cells because they can't be taken.
 - The cell near them have negative weights at the start because they allow the opponent to take the corners.
 - The edges have some tactical power, they are difficult to be taken too.
-- Notice that the weights converge to 1, the score of the last move is simply the sum of the board, this will be more clear when we'll talk about how the models were trained
+- Notice that the weights converge to 1, the score of the last move is simply the sum of the board.
   
-### Model selection
-  
-- The model was not selected as a normal machine learning would do, so by dividing the dataset in train and test and then selecting the model with the highest score and highest generalization out-of-sample.
-- I decided to test it directly in some matches against a random bot and choose the model with the highest chances of winning. In research.py this was done by the function *multiprocessing_test_vs_random_bot()* which uses the advantages of parallel computing to play multiple matches at the same time and so reducing the time of execution.
-- We chose the ridge regression because it reduces the problems of multicollinearity by keeping low values of the weights. Indeed, as the board is often symmetric after a sequence of moves the cells are naturally dependent on each other.
-  
-  
- 
+
