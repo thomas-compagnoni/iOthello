@@ -185,7 +185,7 @@ Finally, I chose the ridge regression because it reduces the problems of multico
 ### Weights
 Let's explore the weights computed by the Ridge regression. Here is the graph of how they evolve through the time, every line represents a cell.
 
-We can immediately spot **three important facts**:
+We can spot immediately **three important facts**:
   1. Some weights move similarly
   2. Their value change through the game, some even move from being negative to being positive.
   3. Some have values near zero, therefore they are not strategic.
@@ -194,6 +194,8 @@ We can immediately spot **three important facts**:
 <img src="https://github.com/ThomasMind/Othello-AI/blob/293d50d2b1db5db85207080897ec143ee2141044/figs/weights.png" alt="alt text" width="600" height="350"> 
 
 <p>&nbsp;</p>
+
+> As some weights move similarly I tried to group them and see what happened.
 
 - The graph on the left is the same of the graph above but with cluster regrouping, while the graph on the right represents which are the cells corresponding to each cluster.
 
