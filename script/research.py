@@ -31,7 +31,7 @@ class Othello:
 
     @staticmethod
     def load_models():
-        if os.path.exists(join(dirname(__file__), 'models')):
+        if os.path.exists('models'):
             models = []
             for move in range(32):
                 filename = join(dirname(__file__), 'models', f'{move}_ridge.sav')
@@ -168,7 +168,7 @@ class Othello:
         no_possible_moves = [False, False]
         while True:
             moves = self.find_possible_moves(board, player)
-            if len(moves) == 0:  # if no possible moves: for both player end the game, else change player and continue
+            if len(moves) == 0:  # if no possible moves: for both player end the iothello, else change player and continue
                 no_possible_moves[max(0, player)] = True
                 if all(no_possible_moves):
                     return np.sum(board)
@@ -190,7 +190,7 @@ class Othello:
 
     def multiprocessing_test_vs_random_bot(self, simulations, n_jobs=cpu_count() - 2):
         if not self.models:
-            raise "There aren't any models!"
+            raise ValueError("There aren't any models!")
         tests = process_map(self.test_vs_random_bot, range(simulations), max_workers=n_jobs, chunksize=1,
                             total=simulations, unit='simulations', mininterval=1, smoothing=0.2, desc='Running simulations... ')
         return tests
@@ -224,32 +224,32 @@ class Othello:
                 move_count += 1
             self.board = self.reset_board()
         if to_csv:
-            os.mkdir('Data')
-            np.savetxt(r'Data\y_sum.csv', y, fmt='%i', delimiter=",")
+            os.mkdir('data')
+            np.savetxt(join('data', 'y_sum.csv'), y, fmt='%i', delimiter=",")
             for i in range(X.shape[0]):
-                np.savetxt(rf'Data\{i}.csv', X[i, :, :], fmt='%i', delimiter=",")
+                np.savetxt(join('data', f'{i}.csv'), X[i, :, :], fmt='%i', delimiter=",")
         else:
             return X, y
 
     @staticmethod
     def train_models():
-        os.mkdir('Models')
-        y = np.genfromtxt(r'Data\y_sum.csv', delimiter=',', dtype=np.int8)
+        os.mkdir('models_others')
+        y = np.genfromtxt(join('data', 'y_sum.csv'), delimiter=',', dtype=np.int8)
         progress_bar = tqdm(range(32), total=32, desc='Computing models for every moves... ', unit='moves')
         for move in progress_bar:
-            X = np.genfromtxt(rf'Data\{move}.csv', delimiter=',', dtype=np.int8)
+            X = np.genfromtxt(join('data', f'{move}.csv'), delimiter=',', dtype=np.int8)
             X_non_zero_indices = np.where((np.count_nonzero(X, axis=1) > 0))[0]
             model = Ridge(alpha=1, max_iter=10000)
             model.fit(X[X_non_zero_indices], y[X_non_zero_indices])
-            filename = rf'Models\{move}_ridge.sav'
+            filename = join(f'models_others', f'{move}_ridge.sav')
             joblib.dump(model, filename)
 
 
 if __name__ == '__main__':
 
     othello = Othello()
-    othello.random_simulations(simulations=10000, to_csv=True)
-    othello.train_models()
+    #othello.random_simulations(simulations=10000, to_csv=True)
+    #othello.train_models()
 
     results = othello.multiprocessing_test_vs_random_bot(simulations=10000)
     print(np.bincount(np.clip(results, -1, 1) + 1) / 10000)
