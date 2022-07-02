@@ -160,7 +160,7 @@ $$
   \end{array}}\right]
 $$
   
-- Each row represents a single simulation, while each columns represents a different cell of the board.
+- Each row represents a single simulation, while each column represents a different cell of the board.
   
 - Let's see the y:
 
@@ -174,7 +174,7 @@ $$
   \end{array}\right]
 $$
   
-- The inputs for our machine learning model are now ready. Each column is a features, each row is a sample.
+- The inputs for our machine learning model are now ready. Each column is a feature, each row is a sample.
 
 <ins>Remember:</ins> For each move we are building a different model.
 
