@@ -110,7 +110,7 @@ What I did was different, I let a machine learning model to decide whether a mov
 $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 
 - **The parameters**: *w* is the weight, *c* is the value of a singular cell. 
-- **The subscripts**: *m* is the move number (weights are dinamic through the match), *i* is the line, *j* the column.
+- **The subscripts**: *m* is the move number (weights are dynamic through the match), *i* is the line, *j* the column.
 
 > In the image above: 
 > a simple sum gives -1.0, while my model gives -1.5. It is saying that the black position is stronger than white's.
@@ -118,8 +118,8 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 ### 2. How to find the best move
 Now we can assign a score to a given board, but how do we confront them?<br> 
 We need to apply the score function on every board computed in the Montecarlo tree. For every board in the first level we'll have a list of scores for the ones in the second layer.<br>
-The image explains the process, I used the same example has before to make it clearer. Every circle represent a board, the color depends on the player which has the turn. From the starting position (the root node), we developed our possible moves and each subsequent move.<br>
-What is new here is the last line **MIN**. This is the minimum score for each subset which can be intrepreted as the worst case-scenario if we choose that path. We want to minimize this risk. <br>
+The image explains the process, I used the same example has before to make it clearer. Every circle represent a board, the colour depends on the player which has the turn. From the starting position (the root node), we developed our possible moves and each subsequent move.<br>
+What is new here is the last line **MIN**. This is the minimum score for each subset which can be interpreted  as the worst case-scenario if we choose that path. We want to minimize this risk. <br>
 That isn't the **PERFECT** move, it is the **LEAST WORST**.
 > **The best move is the one with the highest *MIN* value.**
 
@@ -127,7 +127,7 @@ That isn't the **PERFECT** move, it is the **LEAST WORST**.
 <img src="https://github.com/ThomasMind/Othello-AI/blob/12f70cab51547ccf68f00a579ac4c4199fd5b9d1/figs/scores.png" alt="alt text" width="550" height="350"> 
 
 
-Basically it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
+Basically it is a **Minimax** function. This is a concept well known in game theory, I'll leave you the Wikipedia [page](https://en.wikipedia.org/wiki/Minimax).
   
 > #### Some facts:
 >  - We can apply the rule to player two by inverting the steps (first MAX than MIN), more the score is negative more the player has an advantage.
@@ -137,7 +137,7 @@ Basically it is a **Minimax** function. This is a concept well known in game the
  
 ## 3. Training the models
 
-In order to train the models I decided to simulate random matches between two random bots. The more the better, so I saved 4 millions matches in 10GB of csv.
+To train the models, I decided to simulate random matches between two random bots. The more the better, so I saved 4 million matches in 10GB of csv.
 This is done by the function "random_simulations" in *research.py*.
 
 
@@ -148,7 +148,7 @@ Technically:
 
 ___An example___:
   
-- Suppose we have done 4 simulations and we want to see what are the possible states of the board at move 10. <br>
+- Suppose we have done 4 simulations and we want to see which are the possible states of the board at move 10. <br>
 
 $$
   \small X = 
@@ -174,7 +174,7 @@ $$
   \end{array}\right]
 $$
   
-- The input for our machine learning model are now ready. Each columns is a features, each row is a sample.
+- The inputs for our machine learning model are now ready. Each column is a features, each row is a sample.
 
 <ins>Remember:</ins> For each move we are building a different model.
 
@@ -195,7 +195,7 @@ We can spot immediately **three important facts**:
 
 <p>&nbsp;</p>
 
-> As some weights move similarly I tried to group them and see what happened.
+> As some weights move similarly, I tried to group them and see what happened.
 
 - The graph on the left is the same of the graph above but with cluster regrouping, while the graph on the right represents which are the cells corresponding to each cluster.
 
@@ -205,6 +205,6 @@ We can spot immediately **three important facts**:
   
 > The results are astonishing, they are intuitive and they respect the classical theory of the game.
 - The corners are the most powerful cells because they can't be taken.
-- The cell near them have negative weights at the start because they allow the opponent to take the corners.
+- The cells near them have negative weights at the start because they allow the opponent to take the corners.
 - The edges have some tactical power, they are difficult to be taken too.
 - Notice that the weights converge to 1, the score of the last move is simply the sum of the board.
