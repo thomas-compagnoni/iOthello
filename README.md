@@ -208,5 +208,3 @@ We can spot immediately **three important facts**:
 - The cell near them have negative weights at the start because they allow the opponent to take the corners.
 - The edges have some tactical power, they are difficult to be taken too.
 - Notice that the weights converge to 1, the score of the last move is simply the sum of the board.
-  
-
