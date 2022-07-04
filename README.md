@@ -57,15 +57,15 @@ I made dozens of attempts, everyone with bad results, until surprisingly I found
 
 The function is composed by two elements:
 1. A Monte Carlo tree search
-2. A Regressor scoring each board
+2. A Regressor which scores each board
 
 ### 1.1 Monte Carlo tree search
 
-When it's our turn, the algorithm computes all the possible board after two moves. A **Montecarlo tree** of depth 2.
+When it's our turn, the algorithm computes all the possible boards after two moves. A **Montecarlo tree** of depth 2.
 
 #### A visual example
 
-- Suppose the AI is the white player, and we are at the third move in the game. The situation can be like this:
+- Suppose the AI is the white player, and we are at the third move in the game. An hypothetical situation could be presented like this:
 
 <p>&nbsp;</p>
 <p align="center">
@@ -73,7 +73,7 @@ When it's our turn, the algorithm computes all the possible board after two move
 <p>&nbsp;</p>
 
 - We need to choose between 5 possible moves. They represent the first level of our tree. But we need to go deeper.
-- How will be the board if we play move 5?
+- How will the board present itself if we play move 5?
 
 <p>&nbsp;</p>
 <p align="center">
@@ -81,7 +81,9 @@ When it's our turn, the algorithm computes all the possible board after two move
 <p>&nbsp;</p>
 
 - The opponent has 4 moves. 
-- In this example, all the possible moves in response to our first move will give us a total of 21 possible boards, this is the second level of the montecarlo tree. For example, this is the board if the opponent plays move 1.
+- In this example, all the possible moves in response to our first move will give us 21 possible boards, this is the second level of the montecarlo tree.
+
+> Example: this is the board if the opponent plays move 1.
 
 <p>&nbsp;</p>
 <p align="center">
@@ -91,8 +93,8 @@ When it's our turn, the algorithm computes all the possible board after two move
 ### 1.2 The Regressor
 #### Now how do we give a score to each board?
 
-The objective is to reduce the board to a single number which intuitively depends on the number of pieces a player has and their position on the board. As in chess a rook and a queen are usually stronger than a knight and a bishop, in othello pieces on the edges and corners are stronger.
-Reading other projects on Github, I found out that the scores are often given discretionarily, by setting manually some rules. This method can't be optimized, how can a human determine the perfect parameters?
+The theoretical objective is to reduce the board to a single number which depends on the number of pieces a player has and their position on the board. As in chess a rook and a queen are usually stronger than a knight and a bishop; in othello, pieces on the edges and corners are stronger.
+Researching other projects on Github, I found out that the scores are often given discretionarily, by setting manually some rules. This method can't be optimized, how can a human determine the perfect parameters?
 What I did was different, I let a machine learning model to decide whether a move was convenient or not. <br>
 
 - Machine learning needs numbers, so, behind the user-interface the board is a numpy matrix 6x6:<br><p align="center"><br>**0** where empty | **1** for player one | **-1** for player two
