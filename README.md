@@ -120,7 +120,7 @@ $$ \Huge score = \sum_{i=1}^{6}\sum_{j=1}^{6} w_{m,i,j}*c_{i,j} $$
 ### 2. How to find the best move
 Now we can assign a score to a given board, but how do we confront them?<br> 
 We need to apply the score function on every board computed in the Montecarlo tree. For every board in the first level we'll have a list of scores for the ones in the second layer.<br>
-The image explains the process, I used the same example has before to make it clearer. Every circle represent a board, the colour depends on the player which has the turn. From the starting position (the root node), we developed our possible moves and each subsequent move.<br>
+The image explains the process, I used the same example as before to make it clearer. Every circle represent a board, the colour depends on the player which has the turn. From the starting position (the root node), we developed our possible moves and each subsequent move.<br>
 What is new here is the last line **MIN**. This is the minimum score for each subset which can be interpreted  as the worst case-scenario if we choose that path. We want to minimize this risk. <br>
 That isn't the **PERFECT** move, it is the **LEAST WORST**.
 > **The best move is the one with the highest *MIN* value.**
